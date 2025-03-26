@@ -1,0 +1,64 @@
+{% extends 'app/base.html' %}
+{% load static %}
+{% block title %}about{% endblock title %}
+
+{% block banner_slider %}
+<!-- Banner Slider -->
+<div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img src="{% static 'app/images/banner/about banner.jpg' %}" class="d-block w-100" alt="...">
+    </div>
+    <div class="carousel-item">
+      <img src="{% static 'app/images/banner/a2.jpg' %}" class="d-block w-100" alt="...">
+    </div>
+    <div class="carousel-item">
+      <img src="{% static 'app/images/banner/a3.jpg' %}" class="d-block w-100" alt="...">
+    </div>
+    <div class="carousel-item">
+      <img src="{% static 'app/images/banner/a4.jpg' %}" class="d-block w-100" alt="...">
+    </div>
+  </div>
+  <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </a>
+  <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </a>
+</div>
+<!-- End Banner Slider -->
+{% endblock banner_slider %}
+<br><br>
+
+
+
+
+{% block main-content %}
+<div class="container mt-3">
+    <br>
+    <h2 class="text-center">About Us</h2>
+    <br>
+    <div class="row container">
+        <p class="fs-4 text-center">This is a Public Limited Company having its registered
+            and corporate office at Thane Mumbai City of Maharashtra  State i India. This company was incorporated in
+            the year 2018 and production in 2020.
+            This is one of the fastest growing Public Listed Companiesin Thane Mumbai...
+        </p>
+    </div>
+    <br><br>
+    <h2 class="text-center">Mission</h2>
+    <br>
+    <div class="row container">
+        <p class="fs-4 text-center">To embrace the right technology to delight
+            our Costomers
+            Empowering the farmer community through our unique 'Relationship Farming'
+            Model
+            to anticipate , understand and respond to our Costomers, needs by creating 
+            high-quality products and making thm available through innovative and convenient Channels
+        </p>
+    </div>
+</div>
+
+{% endblock main-content %}

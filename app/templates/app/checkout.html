@@ -1,0 +1,112 @@
+{% extends 'app/base.html' %}
+{% load static %}
+{% block title %}Checkout{% endblock title %}
+{% block main-content %}
+<div class="container">
+  {% if messages %}
+        {% for msg in messages %}
+        <div class="alert alert-danger" role="alert">
+          {{ msg }}
+        </div>
+        {% endfor %}
+  {% endif %}
+  
+  <div class="row mt-5">
+    <div class="col-sm-6">
+      <h4>Order Summary</h4>
+      <hr>
+      {% for item in cart_items %}
+      <div class="card mb-2">
+        <div class="card-body">
+          <h5>Product: {{ item.product.title }}</h5>
+          <p>Quantity: {{ item.quantity }}</p>
+          <p class="fw-bold">Price: {{ item.product.discounted_price }}</p>
+        </div>
+      </div>
+      {% endfor %}
+      <p class="fw-bold">Total Cost + Rs. 40  = {{ totalamount }}</p>
+
+      <small>Term and Condition: Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia, ullam saepe! Iure optio repellat dolor velit, minus rem. Facilis cumque neque numquam laboriosam, accusantium adipisci nisi nihil in et quis?</small>
+    </div>
+
+    <div class="col-sm-4 offset-sm-1">
+      <h4>Select Shipping Address</h4>
+      <hr>
+      <form  action="/paymentdone"  id="myform">
+        {% csrf_token %}
+        {% for ad in add %}
+        <div class="card">
+          <div class="card-body">
+            <h5>{{ ad.name }}</h5>
+            <p>{{ ad.locality }} {{ ad.city }} {{ ad.stte }} -{{ ad.zipcode }}</p>
+            
+          </div>
+        </div>
+        <div class="form-check mt-2 mb-5">
+          <input class="form-check-input" type="radio" name="custid" id="custadd{{ forloop.counter }}" value="{{ ad.id }}" checked>
+          <label class="form-check-label fw-bold" for="custadd{{ forloop.counter }}">
+            Address: {{ forloop.counter }} </label>
+        </div>
+        {% endfor %}
+        
+        <div class="form-check mb-3">
+          <label for="totalamount" class="form-control">Total Amount</label>
+          <input type="number" class="form-control" name="totalamount" value="{{ totalamount }}" readonly>
+      </div>
+      
+      
+        
+        <div class="text-end">
+          <button id="rzp-button1" type="submit" class="btn btn-warning mt-3 px-5 fw-bold">Payment</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endblock main-content %}
+
+{% block payment-gateway %}
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script>
+var options = {
+    "key": "rzp_test_0MQIuX6ld3u2ac", // Razorpay API Key
+    "amount": "{{ payment.amount }}", // Total amount in paise
+    "currency": "INR",
+    "name": "Sky World",
+    "description": "Test Transaction",
+    "image": "https://example.com/your_logo",
+    "order_id": "{{ payment.id }}", // Razorpay order ID
+    "handler": function (response){
+        console.log("Payment ID:", response.razorpay_payment_id);
+        console.log("Order ID:", response.razorpay_order_id);
+        console.log("Signature:", response.razorpay_signature);
+        window.location.href = "/"; // Redirect to home after successful payment
+    },
+    "prefill": {
+        "name": "{{ user.username }}",  // Prefill with user's data
+        "email": "{{ user.email }}",
+        "contact": "8115469476" // Replace with dynamic user contact if available
+    },
+    "theme": {
+        "color": "#3399cc"
+    }
+};
+
+var rzp1 = new Razorpay(options);
+rzp1.on('payment.failed', function (response){
+        alert(response.error.code);
+        alert(response.error.description);
+        alert(response.error.source);
+        alert(response.error.step);
+        alert(response.error.reason);
+        alert(response.error.metadata.order_id);
+        alert(response.error.metadata.payment_id);
+});
+document.getElementById('rzp-button1').onclick = function(e){
+    rzp1.open();
+    e.preventDefault();
+}
+</script>
+
+{% endblock payment-gateway %}

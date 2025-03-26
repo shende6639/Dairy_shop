@@ -1,0 +1,21 @@
+{% extends 'app/base.html' %}
+{% load static %}
+
+{% block title %}protein{% endblock title %}
+{% block main-content %}
+
+<div style="display: inline-flex;">
+    <div>
+        <img src="{% static 'app/images/product/Protein.jpeg' %}" width="800px" height="500px" alt="Protein">
+    </div>
+    <div style="background-color: gray; padding-left: 5px; padding-top: 60px;">
+        <h3 style="text-align: center;">Protein</h3>
+        <p>
+            Protein is the building block of our body, essential for muscle repair and growth. It plays a critical role in maintaining healthy skin, hair, and nails while boosting your immunity. Consuming dairy products rich in protein, such as milk, yogurt, and cheese, ensures you meet your daily nutritional needs. 
+            <br><br>
+            Start your journey to a stronger, healthier you with protein-packed dairy!
+        </p>
+    </div>
+</div>
+{% endblock main-content %}
+
